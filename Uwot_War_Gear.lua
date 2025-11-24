@@ -20,25 +20,21 @@ end
 
 function init_gear_sets()
 
-	-- Weapons sets
+
 	sets.weapons.Chango = {main="Chango",sub="Utu Grip"}
 	sets.weapons.Sword = {main="Naegling",sub="Blurred Shield +1"}
 	sets.weapons.Club = {main="Loxotic Mace +1",sub="Blurred Shield +1"}
 	sets.weapons.Polearm = {main="Shining One",sub="Utu Grip"}
 	sets.weapons.Greatsword = {main="Montante +1",sub="Utu Grip"}
 
-	-- Precast sets to enhance JAs
+
 	sets.precast.JA['Berserk'] = {back="Cichol's Mantle", feet="Agoge Calligae +1"}
 	sets.precast.JA['Warcry'] = {head="Agoge Mask +3"}
-	sets.precast.JA['Defender'] = {}
 	sets.precast.JA['Aggressor'] = {head="Pummeler's Mask +1"}
 	sets.precast.JA['Mighty Strikes'] = {}
 	sets.precast.JA["Warrior's Charge"] = {}
 	sets.precast.JA['Tomahawk'] = {ammo="Thr. Tomahawk", feet="Agoge Calligae +1"}
-	sets.precast.JA['Retaliation'] = {}
-	sets.precast.JA['Restraint'] = {}
 	sets.precast.JA['Blood Rage'] = {body="Boii Lorica +2"}
-	sets.precast.JA['Brazen Rush'] = {}
 	sets.precast.JA['Provoke'] = set_combine(sets.Enmity,{})
                    
 
@@ -56,8 +52,6 @@ function init_gear_sets()
 		right_ring="Gelatinous Ring +1",
 		back={ name="Cichol's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
 	}
-	sets.Knockback = {}
-	sets.passive.Twilight = {}
 
 	sets.precast.FC = {}
 	
@@ -207,9 +201,6 @@ function init_gear_sets()
 	})
 
 	sets.buff.Sleep = {neck="Berserker's Torque"}
-
-	sets.buff.Retaliation = {}
-	sets.buff.Restraint = {}
 
 	sets.TreasureHunter = {
 			ammo="Perfect Lucky Egg",
