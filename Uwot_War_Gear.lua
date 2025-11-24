@@ -23,7 +23,7 @@ function init_gear_sets()
 	-- Weapons sets
 	sets.weapons.Chango = {main="Chango",sub="Utu Grip"}
 	sets.weapons.Sword = {main="Naegling",sub="Blurred Shield +1"}
-	sets.weapons.Club = {main="Loxotic Mace +1",sub="Blurred Shield"}
+	sets.weapons.Club = {main="Loxotic Mace +1",sub="Blurred Shield +1"}
 	sets.weapons.Polearm = {main="Shining One",sub="Utu Grip"}
 	sets.weapons.Greatsword = {main="Montante +1",sub="Utu Grip"}
 
@@ -178,6 +178,10 @@ function init_gear_sets()
 	}
 
 	sets.precast.WS["Seraph Blade"] = sets.precast.WS["Red Lotus Blade"]
+	sets.precast.WS["Sanguine Blade"] = set_combine(sets.precast.WS["Red Lotus Blade"],{
+		head="Pixie Hairpin +1",
+		left_ring="Archon Ring"
+	})
 
 	sets.idle = {
 		ammo="Coiste Bodhar",
