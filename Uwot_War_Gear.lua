@@ -11,10 +11,13 @@ function user_job_setup()
 
 	autows_list = {['Chango']="Upheaval", ['Sword']="Savage Blade", ['Club']="Judgment", ['Polearm']="Impulse Drive", ['Greatsword']="Resolution"}
 
-	send_command('bind ^f gs c toggle AutoWSMode')
 	send_command('bind !f gs c cycle weapons')
-	send_command('bind numpad1 mount "Noble Chocobo"')
 	send_command('bind ^` gs c cycle OffenseMode')
+
+	send_command('bind ^f gs c toggle AutoWSMode')
+	send_command('bind %~f gs c toggle autobuffmode')
+
+	send_command('bind numpad1 mount "Noble Chocobo"')
 
 	select_default_macro_book()
 end
@@ -255,30 +258,31 @@ function select_default_macro_book()
 end
 
 
+
 function job_check_buff()
-if state.AutoBuffMode.value ~= 'Off' and in_combat then
+if state.AutoBuffMode.value ~= 'Off' and player.in_combat then
 
 	local abil_recasts = windower.ffxi.get_ability_recasts()
 
-	if not state.Buff.Retaliation and abil_recasts[8] < latency then
+	if not buffactive.Retaliation and abil_recasts[8] < latency then
 		windower.chat.input('/ja "Retaliation" <me>')
-		add_tick_delay()
+		tickdelay = os.clock() + 1.1
 		return true
-		elseif not state.Buff.Restraint and abil_recasts[9] < latency then
+		elseif not buffactive.Restraint and abil_recasts[9] < latency then
 			windower.chat.input('/ja "Restraint" <me>')
-			add_tick_delay()
+			tickdelay = os.clock() + 1.1
 			return true
 			elseif not buffactive['Blood Rage'] and not buffactive['Warcry'] and abil_recasts[2] > latency and abil_recasts[11] < latency
 				then windower.chat.input('/ja "Blood Rage" <me>')
 				tickdelay = os.clock() + 1.1
 				return true
-				elseif not state.Buff.Berserk and abil_recasts[1] < latency then
+				elseif not buffactive.Berserk and abil_recasts[1] < latency then
 					windower.chat.input('/ja "Berserk" <me>')
-					add_tick_delay()
+					tickdelay = os.clock() + 1.1
 					return true
-					elseif not state.Buff.Aggressor and abil_recasts[4] < latency then
+					elseif not buffactive.Aggressor and abil_recasts[4] < latency then
 						windower.chat.input('/ja "Aggressor" <me>')
-						add_tick_delay()
+						tickdelay = os.clock() + 1.1
 						return true
 						else
 							return false
