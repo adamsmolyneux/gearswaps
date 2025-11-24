@@ -1,11 +1,7 @@
 function user_job_setup()
-	-- Options: Override default values
+
     state.OffenseMode:options('Normal','Acc')
     state.WeaponskillMode:options('Match')
-    state.PhysicalDefenseMode:options('PDT', 'PDTReraise')
-    state.MagicalDefenseMode:options('MDT', 'MDTReraise')
-	state.ResistDefenseMode:options('MEVA')
-
 
 	state.Weapons:options('Chango','Sword','Club','Polearm','Greatsword')
 
@@ -31,7 +27,21 @@ function init_gear_sets()
 	sets.weapons.Polearm = {main="Shining One",sub="Utu Grip"}
 	sets.weapons.Greatsword = {main="Montante +1",sub="Utu Grip"}
 
-	
+	-- Precast sets to enhance JAs
+	sets.precast.JA['Berserk'] = {back="Cichol's Mantle", feet="Agoge Calligae +1"}
+	sets.precast.JA['Warcry'] = {head="Agoge Mask +3"}
+	sets.precast.JA['Defender'] = {}
+	sets.precast.JA['Aggressor'] = {head="Pummeler's Mask +1"}
+	sets.precast.JA['Mighty Strikes'] = {}
+	sets.precast.JA["Warrior's Charge"] = {}
+	sets.precast.JA['Tomahawk'] = {ammo="Thr. Tomahawk", feet="Agoge Calligae +1"}
+	sets.precast.JA['Retaliation'] = {}
+	sets.precast.JA['Restraint'] = {}
+	sets.precast.JA['Blood Rage'] = {body="Boii Lorica +2"}
+	sets.precast.JA['Brazen Rush'] = {}
+	sets.precast.JA['Provoke'] = set_combine(sets.Enmity,{})
+                   
+
 	sets.Enmity = {
 		ammo="Sapience Orb",
 		head="Halitus Helm",
@@ -48,22 +58,6 @@ function init_gear_sets()
 	}
 	sets.Knockback = {}
 	sets.passive.Twilight = {}
-	
-	-- Precast sets to enhance JAs
-	sets.precast.JA['Berserk'] = {back="Cichol's Mantle", feet="Agoge Calligae +1"}
-	sets.precast.JA['Warcry'] = {head="Agoge Mask +3"}
-	sets.precast.JA['Defender'] = {}
-	sets.precast.JA['Aggressor'] = {head="Pummeler's Mask +1"}
-	sets.precast.JA['Mighty Strikes'] = {}
-	sets.precast.JA["Warrior's Charge"] = {}
-	sets.precast.JA['Tomahawk'] = {ammo="Thr. Tomahawk", feet="Agoge Calligae +1"}
-	sets.precast.JA['Retaliation'] = {}
-	sets.precast.JA['Restraint'] = {}
-	sets.precast.JA['Blood Rage'] = {body="Boii Lorica +2"}
-	sets.precast.JA['Brazen Rush'] = {}
-	sets.precast.JA['Provoke'] = set_combine(sets.Enmity,{})
-                   
-
 
 	sets.precast.FC = {}
 	
