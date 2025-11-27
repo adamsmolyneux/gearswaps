@@ -3,28 +3,29 @@ function user_job_setup()
     state.OffenseMode:options('Hybrid','Normal')
     state.WeaponskillMode:options('Match')
 	state.IdleMode:options('Normal')
-	state.Weapons:options('Verethragna')
+	state.Weapons:options('Verethragna','Xoanon')
 
     state.ExtraMeleeMode = M{['description']='Extra Melee Mode', 'None'}
 
     update_melee_groups()
 	
-	-- Additional local binds
-	 send_command('bind ^` gs c cycle OffenseMode')
-	 send_command('bind ^f gs c toggle AutoWSMode')
+	send_command('bind !f gs c cycle weapons')
+	send_command('bind ^` gs c cycle OffenseMode')
+
+	send_command('bind ^f gs c toggle AutoWSMode')
+	send_command('bind %~f gs c toggle autobuffmode')
+
+	send_command('bind numpad1 mount "Noble Chocobo"')
 
 	
 	select_default_macro_book()
 end
 
 function init_gear_sets()
-	--------------------------------------
-	-- Start defining the sets
-	--------------------------------------
-	
-	-- Precast Sets
-	
-	-- Precast sets to enhance JAs on use
+
+	sets.weapons.Verethragna = {main="Verethragna"}
+	sets.weapons.Xoanon = {main="Xoanon",sub="Elder's Grip +1"}
+
 	sets.precast.JA['Hundred Fists'] = {legs="Hesychast's Hose +3"}
 	sets.precast.JA['Dodge'] = {feet="Anchorite's Gaiters +3"}
 	sets.precast.JA['Focus'] = {head="Anchorite's Crown +2"}
@@ -41,15 +42,6 @@ function init_gear_sets()
 		hands="Hesychast's Gloves +3"
 		}
 
-	-- Waltz set (chr and vit)
-	sets.precast.Waltz = {}
-		
-	-- Don't need any special gear for Healing Waltz.
-	sets.precast.Waltz['Healing Waltz'] = {}
-
-	sets.precast.Step = {}
-		
-	sets.precast.Flourish1 = {}
 
 	sets.precast.JA['Provoke'] = {
 		ammo="Staunch Tathlum +1",
@@ -67,8 +59,6 @@ function init_gear_sets()
 		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
 	}
 
-
-	-- Fast cast sets for spells
 	
 	sets.precast.FC = {
 		ammo="Sapience Orb",
@@ -84,11 +74,6 @@ function init_gear_sets()
 		right_ring="Naji's Loop",
 	}
 
-	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {})
-
-       
-	-- Weaponskill sets
-	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
 		ammo="Coiste Bodhar",
 		head="Mpaca's Cap",
@@ -105,10 +90,6 @@ function init_gear_sets()
 		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
 	}
 
-
-	-- Specific weaponskill sets.
-
-
 	sets.precast.WS['Asuran Fists']    = {
 		ammo="Crepuscular Pebble",
 		head="Hes. Crown +3",
@@ -117,7 +98,7 @@ function init_gear_sets()
 		legs="Mpaca's Hose",
 		feet="Malignance Boots",
 		neck="Fotia Gorget",
-		waist="Fotia Belt",
+		waist="Moonbow Belt +1",
 		left_ear="Ishvara Earring",
 		right_ear="Sherida Earring",
 		left_ring="Sroda Ring",
@@ -157,11 +138,22 @@ function init_gear_sets()
 		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
 	}
 
-
-
-	sets.precast.WS['Cataclysm'] = {}
+	sets.precast.WS['Cataclysm'] = {
+		ammo="Knobkierrie",
+		head="Pixie Hairpin +1",
+		body="Nyame Mail",
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets",
+		neck="Sanctity Necklace",
+		waist="Orpheus's Sash",
+		left_ear="Friomisi Earring",
+		right_ear="Moonshade Earring",
+		left_ring="Archon Ring",
+		right_ring="Metamor. Ring +1",
+		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
+	}
 	
-	-- Swap to these on Moonshade using WS if at 3000 TP
 	sets.MaxTP = {ear1="Brutal Earring",ear2="Sherida Earring",}
 	sets.AccMaxTP = {ear1="Mache Earring +1",ear2="Telos Earring"}
 	
@@ -258,9 +250,9 @@ function init_gear_sets()
 end
 end
 
--- Select default macro book on initial load or subjob change.
+
 function select_default_macro_book()
-	-- Default macro set/book
+
 		set_macro_page(1, 5)
 
 end
