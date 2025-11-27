@@ -265,10 +265,6 @@ if state.AutoBuffMode.value ~= 'Off' and player.in_combat then
 					windower.chat.input('/ja "Berserk" <me>')
 					tickdelay = os.clock() + 1.1
 					return true
-					elseif not buffactive.Aggressor and abil_recasts[4] < latency then
-						windower.chat.input('/ja "Aggressor" <me>')
-						tickdelay = os.clock() + 1.1
-						return true
 						else
 							return false
 							end
@@ -307,20 +303,13 @@ if spell.type == 'WeaponSkill' then
 						return
 						end
 						end
-						elseif spell.type == "JobAbility" then
-							if spell.english == 'Berserk' then
-								if state.ConquerorMode.value == 'Always' or (state.ConquerorMode.value ~= 'Never' and tonumber(state.ConquerorMode.value) > player.tp) then
-									internal_enable_set("Weapons")
-									end
-									end
-									end
-									end
+						end
+						end
 
 
 function job_filtered_action(spell, eventArgs)
 if spell.type == 'WeaponSkill' then
 	local available_ws = S(windower.ffxi.get_abilities().weapon_skills)
-	-- WS 112 is Double Thrust, meaning a Spear is equipped.
 	if available_ws:contains(48) then
 		if spell.english == "Upheaval" then
 			windower.chat.input('/ws "Resolution" '..spell.target.raw)
