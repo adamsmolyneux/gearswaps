@@ -149,19 +149,19 @@ function init_gear_sets()
 		neck="Fotia Gorget",
 		waist="Fotia Belt",
 		left_ear="Thrud Earring",
-		right_ear="Moonshade Earring",
+		right_ear="Ishvara Earring",
 		left_ring="Epaminondas's Ring",
 		right_ring="Niqmaddu Ring",
 		back={ name="Cichol's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%',}},
 	}
 
 	sets.precast.WS["Red Lotus Blade"] = {
-		ammo="Pemphredo Tathlum",
-		head="Agoge Mask +3",
-		body="Pumm. Lorica +3",
-		hands={ name="Valorous Mitts", augments={'"Mag.Atk.Bns."+20','Sklchn.dmg.+3%','INT+1',}},
-		legs={ name="Valorous Hose", augments={'"Mag.Atk.Bns."+24','Pet: "Dbl.Atk."+2 Pet: Crit.hit rate +2','Phalanx +2','Mag. Acc.+13 "Mag.Atk.Bns."+13',}},
-		feet={ name="Valorous Greaves", augments={'"Mag.Atk.Bns."+25','Crit.hit rate+4','Attack+10',}},
+		ammo="Knobkierrie",
+		head="Nyame Helm",
+		body="Nyame Mail",
+		hands="Nyame Gauntlets",
+		legs="Nyame Flanchard",
+		feet="Nyame Sollerets",
 		neck="Sanctity Necklace",
 		waist="Orpheus's Sash",
 		left_ear="Friomisi Earring",
@@ -261,10 +261,6 @@ if state.AutoBuffMode.value ~= 'Off' and player.in_combat then
 			windower.chat.input('/ja "Restraint" <me>')
 			tickdelay = os.clock() + 1.1
 			return true
-			elseif not buffactive['Blood Rage'] and not buffactive['Warcry'] and abil_recasts[2] > latency and abil_recasts[11] < latency
-				then windower.chat.input('/ja "Blood Rage" <me>')
-				tickdelay = os.clock() + 1.1
-				return true
 				elseif not buffactive.Berserk and abil_recasts[1] < latency then
 					windower.chat.input('/ja "Berserk" <me>')
 					tickdelay = os.clock() + 1.1
@@ -278,6 +274,66 @@ if state.AutoBuffMode.value ~= 'Off' and player.in_combat then
 							end
 							end
 							end
+
+function job_precast(spell, spellMap, eventArgs)
+if spell.type == 'WeaponSkill' then
+	if state.AutoBuffMode.value ~= 'Off' then
+		local abil_recasts = windower.ffxi.get_ability_recasts()
+		if player.tp < 2250 and not state.Buff['Blood Rage'] and not state.Buff.Warcry and abil_recasts[2] < latency then
+			eventArgs.cancel = true
+			windower.chat.input('/ja "Warcry" <me>')
+			windower.chat.input:schedule(1.1,'/ws "'..spell.english..'" '..spell.target.raw..'')
+			add_tick_delay(1.1)
+			return
+				elseif not buffactive['Blood Rage'] and not buffactive['Warcry'] and abil_recasts[2] > latency and abil_recasts[11] < latency then
+					eventArgs.cancel = true
+					windower.chat.input('/ja "Blood Rage" <me>')
+					windower.chat.input:schedule(1.1,'/ws "'..spell.english..'" '..spell.target.raw..'')
+					tickdelay = os.clock() + 1.1
+					return true
+			elseif state.Buff['SJ Restriction'] then
+				return
+				elseif player.sub_job == 'SAM' and player.tp > 1850 and abil_recasts[140] < latency then
+					eventArgs.cancel = true
+					windower.chat.input('/ja "Sekkanoki" <me>')
+					windower.chat.input:schedule(1.1,'/ws "'..spell.english..'" '..spell.target.raw..'')
+					add_tick_delay(1.1)
+					return
+					elseif player.sub_job == 'SAM' and abil_recasts[134] < latency then
+						eventArgs.cancel = true
+						windower.chat.input('/ja "Meditate" <me>')
+						windower.chat.input:schedule(1.1,'/ws "'..spell.english..'" '..spell.target.raw..'')
+						add_tick_delay(1.1)
+						return
+						end
+						end
+						elseif spell.type == "JobAbility" then
+							if spell.english == 'Berserk' then
+								if state.ConquerorMode.value == 'Always' or (state.ConquerorMode.value ~= 'Never' and tonumber(state.ConquerorMode.value) > player.tp) then
+									internal_enable_set("Weapons")
+									end
+									end
+									end
+									end
+
+
+function job_filtered_action(spell, eventArgs)
+if spell.type == 'WeaponSkill' then
+	local available_ws = S(windower.ffxi.get_abilities().weapon_skills)
+	-- WS 112 is Double Thrust, meaning a Spear is equipped.
+	if available_ws:contains(48) then
+		if spell.english == "Upheaval" then
+			windower.chat.input('/ws "Resolution" '..spell.target.raw)
+			cancel_spell()
+			eventArgs.cancel = true
+			elseif spell.english == "Fell Cleave" then
+				send_command('@input /ws "Shockwave" '..spell.target.raw)
+				cancel_spell()
+				eventArgs.cancel = true
+				end
+				end
+				end
+				end
 
 
 
