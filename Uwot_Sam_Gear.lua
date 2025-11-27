@@ -137,11 +137,11 @@ function init_gear_sets()
 
     sets.precast.WS['Tachi: Ageha'] = {
         ammo="Knobkierrie",
-        head="Flam. Zucchetto +2",
-        body="Flamma Korazin +2",
-        hands="Flam. Manopolas +2",
-        legs="Mpaca's Hose",
-        feet="Flam. Gambieras +2",
+        head="Nyame Helm",
+        body="Nyame Mail",
+        hands="Nyame Gauntlets",
+        legs="Nyame Flanchard",
+        feet="Nyame Sollerets",
         neck="Fotia Gorget",
         waist="Fotia Belt",
         left_ear="Gwati Earring",
@@ -155,11 +155,11 @@ function init_gear_sets()
 		
     sets.precast.WS['Tachi: Jinpu'] = {
         ammo="Knobkierrie",
-        head="Mpaca's Cap",
-        body="Sakonji Domaru +3",
-        hands="Kasuga Kote +2",
-        legs="Wakido Haidate +3",
-        feet={ name="Valorous Greaves", augments={'"Mag.Atk.Bns."+25','Crit.hit rate+4','Attack+10',}},
+        head="Nyame Helm",
+        body="Nyame Mail",
+        hands="Nyame Gauntlets",
+        legs="Nyame Flanchard",
+        feet="Nyame Sollerets",
         neck="Sanctity Necklace",
         waist="Orpheus's Sash",
         left_ear="Friomisi Earring",
@@ -196,29 +196,29 @@ function init_gear_sets()
 	sets.idle = {
         ammo="Staunch Tathlum +1",
         head="Wakido Kabuto +3",
-        body="Kasuga Domaru +2",
-        hands="Ken. Tekko +1",
-        legs="Kasuga Haidate +2",
-        feet="Ken. Sune-Ate +1",
+        body="Nyame Mail",
+        hands="Nyame Gauntlets",
+        legs="Nyame Flanchard",
+        feet="Nyame Sollerets",
         neck="Warder's Charm +1",
         waist="Carrier's Sash",
-        left_ear="Genmei Earring",
+        left_ear="Etiolation Earring",
         right_ear="Odnowa Earring +1",
         left_ring="Defending Ring",
         right_ring="Shneddick Ring",
         back={ name="Smertrios's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Store TP"+10','Phys. dmg. taken-10%',}},
     }
-		
+
 
 
     sets.engaged.Hybrid = {
         ammo="Coiste Bodhar",
         head="Kasuga Kabuto +2",
         body="Kasuga Domaru +2",
-        hands="Ken. Tekko +1",
+        hands="Nyame Gauntlets",
         legs="Kasuga Haidate +2",
-        feet="Ken. Sune-Ate +1",
-        neck="Loricate Torque +1",
+        feet="Nyame Sollerets",
+        neck="Warder's Charm +1",
         waist="Sailfi Belt +1",
         left_ear="Dedition Earring",
         right_ear="Kasuga Earring",
@@ -267,9 +267,9 @@ function init_gear_sets()
     sets.buff['Meikyo Shisui'] = {}
 end
 
--- Select default macro book on initial load or subjob change.
+
 function select_default_macro_book()
-    -- Default macro set/book
+
         set_macro_page(1, 2)
     end
 
