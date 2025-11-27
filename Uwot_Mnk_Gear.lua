@@ -275,15 +275,15 @@ if state.AutoBuffMode.value ~= 'Off' and player.in_combat then
 				windower.chat.input('/ja "Footwork" <me>')
 				tickdelay = os.clock() + 1.1
 				return true
+				elseif not buffactive['Focus'] and abil_recasts[13] < latency then
+					windower.chat.input('/ja "Focus" <me>')
+					tickdelay = os.clock() + 1.1
+					return true
 				elseif player.sub_job == 'WAR' and not state.Buff['SJ Restriction'] then
 					if not buffactive.Berserk and abil_recasts[1] < latency then
 						windower.chat.input('/ja "Berserk" <me>')
 						tickdelay = os.clock() + 1.1
 						return true
-						elseif not (buffactive.Aggressor or buffactive.Focus) and abil_recasts[13] < latency then
-							windower.chat.input('/ja "Focus" <me>')
-							tickdelay = os.clock() + 1.1
-							return true
 							else
 								return false
 								end
