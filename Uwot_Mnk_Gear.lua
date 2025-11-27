@@ -271,7 +271,7 @@ if state.AutoBuffMode.value ~= 'Off' and player.in_combat then
 			windower.chat.input('/ja "Impetus" <me>')
 			tickdelay = os.clock() + 1.1
 			return true
-			elseif not (buffactive.Impetus or buffactive.Footwork) and abil_recasts[21] < latency then
+			elseif not buffactive['Impetus'] and not buffactive['Footwork'] and abil_recasts[21] < latency then
 				windower.chat.input('/ja "Footwork" <me>')
 				tickdelay = os.clock() + 1.1
 				return true
