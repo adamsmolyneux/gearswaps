@@ -55,7 +55,7 @@ function init_gear_sets()
 		waist="Moonbow Belt +1",
 		left_ear="Etiolation Earring",
 		right_ear="Odnowa Earring +1",
-		left_ring="Defending Ring",
+		left_ring="Murky Ring",
 		right_ring="Gelatinous Ring +1",
 		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
 	}
@@ -118,7 +118,7 @@ function init_gear_sets()
 		waist="Moonbow Belt +1",
 		left_ear="Moonshade Earring",
 		right_ear="Sherida Earring",
-		left_ring="Defending Ring",
+		left_ring="Murky Ring",
 		right_ring="Niqmaddu Ring",
 		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Crit.hit rate+10','Phys. dmg. taken-10%',}},
 	}
@@ -157,6 +157,22 @@ function init_gear_sets()
 
 	sets.FootworkWS = {feet="Anchorite's Gaiters +3"}
 	
+	sets.precast.WS['Spinning Attack'] = {
+		ammo="Hoxne Ampulla",
+		head="Hes. Crown +3",
+		body="Bhikku Cyclas +2",
+		hands="Anchor. Gloves +2",
+		legs="Mpaca's Hose",
+		feet="Mpaca's Boots",
+		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
+		waist="Moonbow Belt +1",
+		left_ear="Ishvara Earring",
+		right_ear="Sherida Earring",
+		left_ring="Epaminondas's Ring",
+		right_ring="Niqmaddu Ring",
+		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
+	}
+
 	sets.midcast.FastRecast = {}
 		
 	sets.idle = {
@@ -170,7 +186,7 @@ function init_gear_sets()
 		waist="Carrier's Sash",
 		left_ear="Etiolation Earring",
 		right_ear="Odnowa Earring +1",
-		left_ring="Defending Ring",
+		left_ring="Murky Ring",
 		right_ring="Shneddick Ring",
 		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
 	}
@@ -185,6 +201,22 @@ function init_gear_sets()
 		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
 		waist="Moonbow Belt +1",
 		left_ear="Dedition Earring",
+		right_ear="Sherida Earring",
+		left_ring="Chirich Ring +1",
+		right_ring="Niqmaddu Ring",
+		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
+	}
+
+	sets.engaged.SubtleBlow.Godhands = {
+		ammo="Hoxne Ampulla",
+		head="Bhikku Crown +2",
+		body="Malignance Tabard",
+		hands="Malignance Gloves",
+		legs="Bhikku Hose +2",
+		feet="Anchorite's Gaiters +3",
+		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
+		waist="Moonbow Belt +1",
+		left_ear="Mache Earring +1",
 		right_ear="Sherida Earring",
 		left_ring="Chirich Ring +1",
 		right_ring="Niqmaddu Ring",
@@ -207,8 +239,25 @@ function init_gear_sets()
 		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
 	}
 
-	sets.buff.Impetus = {body="Bhikku Cyclas +2"}
-	
+	sets.engaged.TP.Godhands = {
+		ammo="Hoxne Ampulla",
+		head="Malignance Chapeau",
+		body="Malignance Tabard",
+		hands="Malignance Gloves",
+		legs="Bhikku Hose +2",
+		feet="Anch. Gaiters +3",
+		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
+		waist="Moonbow Belt +1",
+		left_ear="Mache Earring +1",
+		right_ear="Telos Earring",
+		left_ring="Chirich Ring +1",
+		right_ring="Chirich Ring +1",
+		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
+	}
+
+
+	sets.buff.Impetus = {body="Bhikku Cyclas +2", left_ear="Dedition Earring"}
+	sets.buff.ImpetusWS = set_combine({body="Bhikku Cyclas +2"})
 	sets.engaged.HF = set_combine(sets.engaged, {})
 
 
@@ -222,9 +271,9 @@ function init_gear_sets()
 	sets.TreasureHunter = set_combine(sets.TreasureHunter, {})
 
 	if buffactive.Impetus and (spell.english == "Ascetic's Fury" or spell.english == "Victory Smite") then
-		equip(sets.buff.Impetus)
+		equip(sets.buff.ImpetusWS)
+	end
 
-end
 end
 
 
@@ -269,4 +318,42 @@ if state.AutoBuffMode.value ~= 'Off' and player.in_combat then
 
 								return false
 								end
+
+
+
+function job_filtered_action(spell, eventArgs)
+if spell.type == 'WeaponSkill' then
+	local available_ws = S(windower.ffxi.get_abilities().weapon_skills)
+	if available_ws:contains(176) then
+		if spell.english == "Spinning Attack" then
+			windower.chat.input('/ws "Cataclysm" '..spell.target.raw)
+			cancel_spell()
+			eventArgs.cancel = true
+			end
+	end
+end
+end
+
+
+
+function job_customize_melee_set(meleeSet)
+
+	if player.equipment.main == "Godhands" and state.OffenseMode.value == 'SubtleBlow' then
+		meleeSet = sets.engaged.SubtleBlow.Godhands
+	end
+	if player.equipment.main == "Godhands" and state.OffenseMode.value == "TP" then
+		meleeSet = sets.engaged.TP.Godhands
+	end
+
+	if buffactive.Impetus then
+		meleeSet = set_combine(meleeSet, sets.buff.Impetus)
+		end
+
+		if buffactive.Footwork then
+			meleeSet = set_combine(meleeSet, sets.buff.Footwork)
+			end
+
+	    return meleeSet
+end
+
 
