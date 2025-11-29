@@ -1,11 +1,10 @@
 function user_job_setup()
-	-- Options: Override default values
-    state.OffenseMode:options('Hybrid','Normal')
+    state.OffenseMode:options('SubtleBlow','TP')
     state.WeaponskillMode:options('Match')
 	state.IdleMode:options('Normal')
-	state.Weapons:options('Verethragna','Xoanon')
+	state.Weapons:options('Verethragna','Godhands','Xoanon')
 
-    state.ExtraMeleeMode = M{['description']='Extra Melee Mode', 'None'}
+	autows_list = {['Verethragna']="Victory Smite", ['Godhands']="Dragon Kick",['Xoanon']="Shell Crusher"}
 
     update_melee_groups()
 	
@@ -14,6 +13,7 @@ function user_job_setup()
 
 	send_command('bind ^f gs c toggle AutoWSMode')
 	send_command('bind %~f gs c toggle autobuffmode')
+	send_command('bind numpad7 gs c toggle autoremovedoommode')
 
 	send_command('bind numpad1 mount "Noble Chocobo"')
 
@@ -24,6 +24,7 @@ end
 function init_gear_sets()
 
 	sets.weapons.Verethragna = {main="Verethragna"}
+	sets.weapons.Godhands = {main="Godhands"}
 	sets.weapons.Xoanon = {main="Xoanon",sub="Elder's Grip +1"}
 
 	sets.precast.JA['Hundred Fists'] = {legs="Hesychast's Hose +3"}
@@ -44,7 +45,7 @@ function init_gear_sets()
 
 
 	sets.precast.JA['Provoke'] = {
-		ammo="Staunch Tathlum +1",
+		ammo="Hoxne Ampulla",
 		head="Halitus Helm",
 		body="Emet Harness +1",
 		hands="Kurys Gloves",
@@ -56,12 +57,12 @@ function init_gear_sets()
 		right_ear="Odnowa Earring +1",
 		left_ring="Defending Ring",
 		right_ring="Gelatinous Ring +1",
-		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
+		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
 	}
 
 	
 	sets.precast.FC = {
-		ammo="Sapience Orb",
+		ammo="Hoxne Ampulla",
 		head={ name="Herculean Helm", augments={'"Fast Cast"+5','Mag. Acc.+7','"Mag.Atk.Bns."+6',}},
 		body={ name="Taeon Tabard", augments={'"Fast Cast"+5','Phalanx +3',}},
 		hands={ name="Leyline Gloves", augments={'Accuracy+14','Mag. Acc.+13','"Mag.Atk.Bns."+13','"Fast Cast"+2',}},
@@ -75,23 +76,23 @@ function init_gear_sets()
 	}
 
 	sets.precast.WS = {
-		ammo="Coiste Bodhar",
+		ammo="Hoxne Ampulla",
 		head="Mpaca's Cap",
 		body="Mpaca's Doublet",
 		hands="Mpaca's Gloves",
 		legs="Mpaca's Hose",
 		feet="Mpaca's Boots",
-		neck="Fotia Gorget",
+		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
 		waist="Moonbow Belt +1",
-		left_ear="Cessance Earring",
+		left_ear="Moonshade Earring",
 		right_ear="Sherida Earring",
-		left_ring="Gere Ring",
+		left_ring="Sroda Ring",
 		right_ring="Niqmaddu Ring",
-		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
+		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
 	}
 
 	sets.precast.WS['Asuran Fists']    = {
-		ammo="Crepuscular Pebble",
+		ammo="Hoxne Ampulla",
 		head="Hes. Crown +3",
 		body="Bhikku Cyclas +2",
 		hands="Mpaca's Gloves",
@@ -103,27 +104,27 @@ function init_gear_sets()
 		right_ear="Sherida Earring",
 		left_ring="Sroda Ring",
 		right_ring="Niqmaddu Ring",
-		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
+		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
 	}
 
 	sets.precast.WS["Victory Smite"]  = {
-		ammo="Knobkierrie",
+		ammo="Hoxne Ampulla",
 		head={ name="Adhemar Bonnet +1", augments={'STR+12','DEX+12','Attack+20',}},
-		body="Ken. Samue +1",
-		hands={ name="Ryuo Tekko +1", augments={'DEX+12','Accuracy+25','"Dbl.Atk."+4',}},
+		body="Mpaca's Doublet",
+		hands="Ryuo Tekko +1",
 		legs="Mpaca's Hose",
-		feet="Ken. Sune-Ate +1",
-		neck="Fotia Gorget",
+		feet="Mpaca's Boots",
+		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
 		waist="Moonbow Belt +1",
-		left_ear="Cessance Earring",
+		left_ear="Moonshade Earring",
 		right_ear="Sherida Earring",
-		left_ring="Gere Ring",
+		left_ring="Defending Ring",
 		right_ring="Niqmaddu Ring",
-		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
+		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Crit.hit rate+10','Phys. dmg. taken-10%',}},
 	}
 
 	sets.precast.WS['Shijin Spiral']   = {
-		ammo="Coiste Bodhar",
+		ammo="Hoxne Ampulla",
 		head="Malignance Chapeau",
 		body="Malignance Tabard",
 		hands="Malignance Gloves",
@@ -135,11 +136,11 @@ function init_gear_sets()
 		right_ear="Sherida Earring",
 		left_ring="Sroda Ring",
 		right_ring="Niqmaddu Ring",
-		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
+		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
 	}
 
 	sets.precast.WS['Cataclysm'] = {
-		ammo="Knobkierrie",
+		ammo="Hoxne Ampulla",
 		head="Pixie Hairpin +1",
 		body="Nyame Mail",
 		hands="Nyame Gauntlets",
@@ -151,25 +152,15 @@ function init_gear_sets()
 		right_ear="Moonshade Earring",
 		left_ring="Archon Ring",
 		right_ring="Metamor. Ring +1",
-		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
+		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
 	}
+
+	sets.FootworkWS = {feet="Anchorite's Gaiters +3"}
 	
-	sets.MaxTP = {ear1="Brutal Earring",ear2="Sherida Earring",}
-	sets.AccMaxTP = {ear1="Mache Earring +1",ear2="Telos Earring"}
-	
-	-- Midcast Sets
 	sets.midcast.FastRecast = {}
 		
-	-- Specific spells
-		
-	-- Sets to return to when not performing an action.
-	
-	-- Resting sets
-	
-
-	-- Idle sets
 	sets.idle = {
-		ammo="Staunch Tathlum +1",
+		ammo="Hoxne Ampulla",
 		head="Malignance Chapeau",
 		body="Malignance Tabard",
 		hands="Malignance Gloves",
@@ -181,49 +172,42 @@ function init_gear_sets()
 		right_ear="Odnowa Earring +1",
 		left_ring="Defending Ring",
 		right_ring="Shneddick Ring",
-		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
+		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
 	}
 
-	-- Engaged sets
-
-	-- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
-	-- sets if more refined versions aren't defined.
-	-- If you create a set with both offense and defense modes, the offense mode should be first.
-	-- EG: sets.engaged.Dagger.Accuracy.Evasion
-
-	-- Normal melee sets
-	sets.engaged = {
-		ammo="Coiste Bodhar",
+	sets.engaged.SubtleBlow = {
+		ammo="Hoxne Ampulla",
 		head="Bhikku Crown +2",
-		body="Ken. Samue +1",
-		hands="Ken. Tekko +1",
+		body="Malignance Tabard",
+		hands="Malignance Gloves",
 		legs="Bhikku Hose +2",
 		feet="Anchorite's Gaiters +3",
 		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
 		waist="Moonbow Belt +1",
 		left_ear="Dedition Earring",
 		right_ear="Sherida Earring",
-		left_ring="Gere Ring",
+		left_ring="Chirich Ring +1",
 		right_ring="Niqmaddu Ring",
-		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
+		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
 	}
 
-	sets.engaged.Hybrid = {
-		ammo="Staunch Tathlum +1",
-		head="Bhikku Crown +2",
-		body="Ken. Samue +1",
-		hands="Ken. Tekko +1",
+	sets.engaged.TP = {
+		ammo="Hoxne Ampulla",
+		head="Malignance Chapeau",
+		body="Malignance Tabard",
+		hands="Malignance Gloves",
 		legs="Bhikku Hose +2",
-		feet="Anchorite's Gaiters +3",
+		feet="Anch. Gaiters +3",
 		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
 		waist="Moonbow Belt +1",
-		left_ear="Cessance Earring",
-		right_ear="Sherida Earring",
-		left_ring="Defending Ring",
-		right_ring="Niqmaddu Ring",
-		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','Accuracy+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},
+		left_ear="Dedition Earring",
+		right_ear="Telos Earring",
+		left_ring="Chirich Ring +1",
+		right_ring="Chirich Ring +1",
+		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
 	}
 
+	sets.buff.Impetus = {body="Bhikku Cyclas +2"}
 	
 	sets.engaged.HF = set_combine(sets.engaged, {})
 
@@ -232,20 +216,13 @@ function init_gear_sets()
 
 	sets.buff.Doom = set_combine(sets.buff.Doom, {})
 	sets.buff.Sleep = {head="Frenzy Sallet"}
-	sets.buff.Impetus = {body="Bhikku Cyclas +2"}
-	sets.buff.Footwork = {feet="Shukuyu Sune-Ate"}
 	sets.buff.Boost = {waist="Ask Sash"}
 	
-	sets.FootworkWS = {}
 
 	sets.TreasureHunter = set_combine(sets.TreasureHunter, {})
 
 	if buffactive.Impetus and (spell.english == "Ascetic's Fury" or spell.english == "Victory Smite") then
 		equip(sets.buff.Impetus)
-
-
-	-- Weapons sets
-	sets.weapons.Verethragna = {main="Verethragna"}
 
 end
 end
@@ -271,14 +248,14 @@ if state.AutoBuffMode.value ~= 'Off' and player.in_combat then
 			windower.chat.input('/ja "Impetus" <me>')
 			tickdelay = os.clock() + 1.1
 			return true
-			elseif not buffactive['Impetus'] and not buffactive['Footwork'] and abil_recasts[21] < latency then
-				windower.chat.input('/ja "Footwork" <me>')
-				tickdelay = os.clock() + 1.1
-				return true
 				elseif not buffactive['Focus'] and abil_recasts[13] < latency then
 					windower.chat.input('/ja "Focus" <me>')
 					tickdelay = os.clock() + 1.1
 					return true
+					elseif not buffactive['Impetus'] and not buffactive['Footwork'] and abil_recasts[21] < latency then
+						windower.chat.input('/ja "Footwork" <me>')
+						tickdelay = os.clock() + 1.1
+						return true
 				elseif player.sub_job == 'WAR' and not state.Buff['SJ Restriction'] then
 					if not buffactive.Berserk and abil_recasts[1] < latency then
 						windower.chat.input('/ja "Berserk" <me>')
