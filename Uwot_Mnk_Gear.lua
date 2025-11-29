@@ -263,7 +263,13 @@ function init_gear_sets()
 
 
 
-	sets.buff.Doom = set_combine(sets.buff.Doom, {})
+	sets.buff.Doom = set_combine(sets.buff.Doom, {
+		neck="Nicander's Necklace",
+		waist="Gishdubar Sash",
+		left_ring="Blenmot's Ring +1",
+		right_ring="Blenmot's Ring +1",
+	})
+
 	sets.buff.Sleep = {head="Frenzy Sallet"}
 	sets.buff.Boost = {waist="Ask Sash"}
 	
