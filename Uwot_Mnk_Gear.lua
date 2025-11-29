@@ -270,9 +270,7 @@ function init_gear_sets()
 
 	sets.TreasureHunter = set_combine(sets.TreasureHunter, {})
 
-	if buffactive.Impetus and (spell.english == "Ascetic's Fury" or spell.english == "Victory Smite") then
-		equip(sets.buff.ImpetusWS)
-	end
+
 
 end
 
