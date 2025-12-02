@@ -1,10 +1,12 @@
 function user_job_setup()
-    state.OffenseMode:options('SubtleBlow','TP')
+    state.OffenseMode:options('SubtleBlow','TP','Squish')
     state.WeaponskillMode:options('Match')
 	state.IdleMode:options('Normal')
 	state.Weapons:options('Verethragna','Godhands','Xoanon')
 
 	autows_list = {['Verethragna']="Victory Smite", ['Godhands']="Dragon Kick",['Xoanon']="Shell Crusher"}
+
+	autowstp = 1000
 
     update_melee_groups()
 	
@@ -28,7 +30,7 @@ function init_gear_sets()
 	sets.weapons.Xoanon = {main="Xoanon",sub="Elder's Grip +1"}
 
 	sets.precast.JA['Hundred Fists'] = {legs="Hesychast's Hose +3"}
-	sets.precast.JA['Dodge'] = {feet="Anchorite's Gaiters +3"}
+	sets.precast.JA['Dodge'] = {feet="Anchorite's Gaiters +4"}
 	sets.precast.JA['Focus'] = {head="Anchorite's Crown +2"}
 	sets.precast.JA['Counterstance'] = {feet="Hesychast's Gaiters +3"}
 	sets.precast.JA['Footwork'] = {feet="Shukuyu Sune-Ate"}
@@ -49,7 +51,7 @@ function init_gear_sets()
 		head="Halitus Helm",
 		body="Emet Harness +1",
 		hands="Kurys Gloves",
-		legs="Bhikku Hose +2",
+		legs="Bhikku Hose +3",
 		feet="Ahosi Leggings",
 		neck="Warder's Charm +1",
 		waist="Moonbow Belt +1",
@@ -155,7 +157,7 @@ function init_gear_sets()
 		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
 	}
 
-	sets.FootworkWS = {feet="Anchorite's Gaiters +3"}
+	sets.FootworkWS = {feet="Anchorite's Gaiters +4"}
 	
 	sets.precast.WS['Spinning Attack'] = {
 		ammo="Hoxne Ampulla",
@@ -196,8 +198,8 @@ function init_gear_sets()
 		head="Bhikku Crown +2",
 		body="Malignance Tabard",
 		hands="Malignance Gloves",
-		legs="Bhikku Hose +2",
-		feet="Anchorite's Gaiters +3",
+		legs="Bhikku Hose +3",
+		feet="Anchorite's Gaiters +4",
 		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
 		waist="Moonbow Belt +1",
 		left_ear="Dedition Earring",
@@ -207,29 +209,17 @@ function init_gear_sets()
 		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
 	}
 
-	sets.engaged.SubtleBlow.Godhands = {
-		ammo="Hoxne Ampulla",
-		head="Bhikku Crown +2",
-		body="Malignance Tabard",
-		hands="Malignance Gloves",
-		legs="Bhikku Hose +2",
-		feet="Anchorite's Gaiters +3",
-		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
-		waist="Moonbow Belt +1",
+	sets.engaged.SubtleBlow.Godhands = set_combine(sets.engaged.SubtleBlow, {
 		left_ear="Mache Earring +1",
-		right_ear="Sherida Earring",
-		left_ring="Chirich Ring +1",
-		right_ring="Niqmaddu Ring",
-		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
-	}
+	})
 
 	sets.engaged.TP = {
 		ammo="Hoxne Ampulla",
 		head="Malignance Chapeau",
 		body="Malignance Tabard",
 		hands="Malignance Gloves",
-		legs="Bhikku Hose +2",
-		feet="Anch. Gaiters +3",
+		legs="Bhikku Hose +3",
+		feet="Anch. Gaiters +4",
 		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
 		waist="Moonbow Belt +1",
 		left_ear="Dedition Earring",
@@ -239,21 +229,29 @@ function init_gear_sets()
 		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
 	}
 
-	sets.engaged.TP.Godhands = {
-		ammo="Hoxne Ampulla",
-		head="Malignance Chapeau",
-		body="Malignance Tabard",
-		hands="Malignance Gloves",
-		legs="Bhikku Hose +2",
-		feet="Anch. Gaiters +3",
-		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
-		waist="Moonbow Belt +1",
+	sets.engaged.TP.Godhands = set_combine(sets.engaged.TP, {
 		left_ear="Mache Earring +1",
-		right_ear="Telos Earring",
-		left_ring="Chirich Ring +1",
-		right_ring="Chirich Ring +1",
-		back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
-	}
+	})
+
+	sets.engaged.Squish = {
+			ammo="Hoxne Ampulla",
+			head={ name="Ryuo Somen +1", augments={'HP+65','"Store TP"+5','"Subtle Blow"+8',}},
+			body="Malignance Tabard",
+			hands={ name="Adhemar Wrist. +1", augments={'STR+12','DEX+12','Attack+20',}},
+			legs="Bhikku Hose +3",
+			feet="Malignance Boots",
+			neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
+			waist="Moonbow Belt +1",
+			left_ear="Dedition Earring",
+			right_ear="Telos Earring",
+			left_ring="Chirich Ring +1",
+			right_ring="Chirich Ring +1",
+			back={ name="Segomo's Mantle", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Store TP"+10','Phys. dmg. taken-10%',}},
+		}
+
+	sets.engaged.Squish.Godhands = set_combine(sets.engaged.Squish, {
+		left_ear="Mache Earring +1",
+	})
 
 
 	sets.buff.Impetus = {body="Bhikku Cyclas +2", left_ear="Dedition Earring"}
@@ -347,6 +345,9 @@ function job_customize_melee_set(meleeSet)
 	end
 	if player.equipment.main == "Godhands" and state.OffenseMode.value == "TP" then
 		meleeSet = sets.engaged.TP.Godhands
+	end
+	if player.equipment.main == "Godhands" and state.OffenseMode.value == "Squish" then
+		meleeSet = sets.engaged.Squish.Godhands
 	end
 
 	if buffactive.Impetus then
