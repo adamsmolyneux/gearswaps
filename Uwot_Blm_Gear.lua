@@ -1,8 +1,8 @@
-function user_job_setup()
+    function user_job_setup()
 	-- Options: Override default values
 	state.CastingMode:options('Normal')
 	state.OffenseMode:options('Normal')
-	state.IdleMode:options('Normal','PDT')
+	state.IdleMode:options('Normal')
 	state.Weapons:options('Club','Staff')
 
 
@@ -246,7 +246,7 @@ function init_gear_sets()
 	
 	sets.midcast.Death = {}
 
-    sets.midcast.Stun = {}
+    sets.midcast.Stun = sets.midcast['Enfeebling Magic']
 		
 
 
@@ -293,41 +293,23 @@ function init_gear_sets()
     sets.resting = {}
     
 
-    -- Idle sets
-    
-    -- Normal refresh idle set
     sets.idle = {
         ammo="Staunch Tathlum +1",
-        head="Befouled Crown",
-        body="Jhakri Robe +2",
-        hands="Volte Gloves",
-        legs="Assid. Pants +1",
-        feet={ name="Merlinic Crackows", augments={'AGI+2','"Fast Cast"+2','Damage taken-5%','Mag. Acc.+7 "Mag.Atk.Bns."+7',}},
-        neck="Loricate Torque +1",
+        head="Nyame Helm",
+        body="Nyame Mail",
+        hands="Nyame Gauntlets",
+        legs="Nyame Flanchard",
+        feet="Nyame Sollerets",
+        neck="Warder's Charm +1",
         waist="Carrier's Sash",
-        left_ear="Genmei Earring",
+        left_ear="Etiolation Earring",
         right_ear="Odnowa Earring +1",
         left_ring="Stikini Ring +1",
-        right_ring="Stikini Ring +1",
+        right_ring="Shneddick Ring",
         back={ name="Taranus's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Mag.Atk.Bns."+10','Phys. dmg. taken-10%',}},
     }
 
-    -- Idle mode that keeps PDT gear on, but doesn't prevent normal gear swaps for precast/etc.
-    sets.idle.PDT = {
-        ammo="Staunch Tathlum +1",
-        head="Ea Hat +1",
-        body="Mallquis Saio +2",
-        hands="Volte Gloves",
-        legs="Ea Slops +1",
-        feet="Ea Pigaches +1",
-        neck="Loricate Torque +1",
-        waist="Carrier's Sash",
-        left_ear="Genmei Earring",
-        right_ear="Odnowa Earring +1",
-        left_ring="Defending Ring",
-        right_ring="Gelatinous Ring +1",
-        back={ name="Taranus's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Mag.Atk.Bns."+10','Phys. dmg. taken-10%',}},
-    }
+
 		
 
 	sets.idle.Death = {}

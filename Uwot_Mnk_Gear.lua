@@ -1,6 +1,6 @@
 function user_job_setup()
     state.OffenseMode:options('SubtleBlow','TP','Squish')
-    state.WeaponskillMode:options('Match')
+    state.WeaponskillMode:options('Normal', 'PDL')
 	state.IdleMode:options('Normal')
 	state.Weapons:options('Verethragna','Godhands','Xoanon')
 
@@ -12,6 +12,7 @@ function user_job_setup()
 	
 	send_command('bind !f gs c cycle weapons')
 	send_command('bind ^` gs c cycle OffenseMode')
+	send_command('bind !^f gs c cycle WeaponskillMode')
 
 	send_command('bind ^f gs c toggle AutoWSMode')
 	send_command('bind %~f gs c toggle autobuffmode')
@@ -80,34 +81,52 @@ function init_gear_sets()
 	sets.precast.WS = {
 		ammo="Hoxne Ampulla",
 		head="Mpaca's Cap",
-		body="Mpaca's Doublet",
-		hands="Mpaca's Gloves",
-		legs="Mpaca's Hose",
+		body="Bhikku Cyclas +2",
+		hands="Hes. Gloves +3",
+		legs="Bhikku Hose +3",
 		feet="Mpaca's Boots",
-		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
+		neck="Fotia Gorget",
 		waist="Moonbow Belt +1",
 		left_ear="Moonshade Earring",
 		right_ear="Sherida Earring",
-		left_ring="Sroda Ring",
+		left_ring="Gere Ring",
 		right_ring="Niqmaddu Ring",
 		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
 	}
+
+	sets.precast.WS.PDL = set_combine(sets.precast.WS, {
+		body="Malignance Tabard",
+		legs="Malignance Tights",
+		hands="Malignance Gloves",
+		feet="Malignance Boots",
+		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
+		left_ring="Sroda Ring",
+	})
+
 
 	sets.precast.WS['Asuran Fists']    = {
 		ammo="Hoxne Ampulla",
 		head="Hes. Crown +3",
 		body="Bhikku Cyclas +2",
-		hands="Mpaca's Gloves",
-		legs="Mpaca's Hose",
-		feet="Malignance Boots",
+		hands="Hes. Gloves +3",
+		legs="Bhikku Hose +3",
+		feet="Hes. Gaiters +3",
 		neck="Fotia Gorget",
 		waist="Moonbow Belt +1",
 		left_ear="Ishvara Earring",
 		right_ear="Sherida Earring",
-		left_ring="Sroda Ring",
+		left_ring="Gere Ring",
 		right_ring="Niqmaddu Ring",
 		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
 	}
+
+	sets.precast.WS['Asuran Fists'].PDL = set_combine(sets.precast.WS['Asuran Fists'], {
+		hands="Malignance Gloves",
+		legs="Malignance Tights",
+		feet="Malignance Boots",
+		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
+		left_ring="Sroda Ring",
+	})
 
 	sets.precast.WS["Victory Smite"]  = {
 		ammo="Hoxne Ampulla",
@@ -116,7 +135,7 @@ function init_gear_sets()
 		hands="Ryuo Tekko +1",
 		legs="Mpaca's Hose",
 		feet="Mpaca's Boots",
-		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
+		neck="Fotia Gorget",
 		waist="Moonbow Belt +1",
 		left_ear="Moonshade Earring",
 		right_ear="Sherida Earring",
@@ -125,21 +144,36 @@ function init_gear_sets()
 		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Crit.hit rate+10','Phys. dmg. taken-10%',}},
 	}
 
+	sets.precast.WS["Victory Smite"].PDL  = set_combine(sets.precast.WS['Victory Smite'], {
+		neck="Mnk. Nodowa +2",
+	})
+
 	sets.precast.WS['Shijin Spiral']   = {
 		ammo="Hoxne Ampulla",
+		head="Mpaca's Cap",
+		body="Bhikku Cyclas +2",
+		hands="Hes. Gloves +3",
+		legs="Bhikku Hose +3",
+		feet="Hes. Gaiters +3",
+		neck="Fotia Gorget",
+		waist="Moonbow Belt +1",
+		left_ear="Moonshade Earring",
+		right_ear="Sherida Earring",
+		left_ring="Gere Ring",
+		right_ring="Niqmaddu Ring",
+		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
+	}
+
+	sets.precast.WS['Shijin Spiral'].PDL = set_combine(sets.precast.WS['Shijin Spiral'], {
 		head="Malignance Chapeau",
 		body="Malignance Tabard",
 		hands="Malignance Gloves",
 		legs="Malignance Tights",
 		feet="Malignance Boots",
 		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
-		waist="Moonbow Belt +1",
-		left_ear="Telos Earring",
-		right_ear="Sherida Earring",
 		left_ring="Sroda Ring",
-		right_ring="Niqmaddu Ring",
 		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
-	}
+	})
 
 	sets.precast.WS['Cataclysm'] = {
 		ammo="Hoxne Ampulla",
@@ -156,26 +190,24 @@ function init_gear_sets()
 		right_ring="Metamor. Ring +1",
 		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
 	}
-
-	sets.FootworkWS = {feet="Anchorite's Gaiters +4"}
 	
 	sets.precast.WS['Spinning Attack'] = {
 		ammo="Hoxne Ampulla",
 		head="Hes. Crown +3",
 		body="Bhikku Cyclas +2",
 		hands="Anchor. Gloves +2",
-		legs="Mpaca's Hose",
-		feet="Mpaca's Boots",
-		neck={ name="Mnk. Nodowa +2", augments={'Path: A',}},
-		waist="Moonbow Belt +1",
+		legs={ name="Herculean Trousers", augments={'Attack+21','Weapon skill damage +5%','STR+10','Accuracy+6',}},
+		feet={ name="Herculean Boots", augments={'Attack+9','Weapon skill damage +4%','STR+10','Accuracy+15',}},
+		neck="Fotia Gorget",
+		waist="Fotia Belt",
 		left_ear="Ishvara Earring",
 		right_ear="Sherida Earring",
 		left_ring="Epaminondas's Ring",
-		right_ring="Niqmaddu Ring",
+		right_ring="Sroda Ring",
 		back={ name="Segomo's Mantle", augments={'STR+20','Accuracy+20 Attack+20','STR+10','Weapon skill damage +10%','Phys. dmg. taken-10%',}},
 	}
 
-	sets.midcast.FastRecast = {}
+	sets.midcast.FastRecast = sets.precast.FC
 		
 	sets.idle = {
 		ammo="Hoxne Ampulla",
@@ -254,6 +286,9 @@ function init_gear_sets()
 	})
 
 
+	sets.FootworkWS = {feet="Anchorite's Gaiters +4"}
+	sets.PDLWS = set_combine({neck="Mnk. Nodowa +2"})
+
 	sets.buff.Impetus = {body="Bhikku Cyclas +2", left_ear="Dedition Earring"}
 	sets.buff.ImpetusWS = set_combine({body="Bhikku Cyclas +2"})
 	sets.engaged.HF = set_combine(sets.engaged, {})
@@ -272,7 +307,11 @@ function init_gear_sets()
 	sets.buff.Boost = {waist="Ask Sash"}
 	
 
-	sets.TreasureHunter = set_combine(sets.TreasureHunter, {})
+	sets.TreasureHunter = set_combine(sets.TreasureHunter, {
+		hands={ name="Herculean Gloves", augments={'"Mag.Atk.Bns."+22','INT+1','"Treasure Hunter"+1',}},
+		feet={ name="Herculean Boots", augments={'"Avatar perpetuation cost" -1','Mag. Acc.+14','"Treasure Hunter"+2','Accuracy+7 Attack+7',}},
+		waist="Chaac Belt",
+	})
 
 
 

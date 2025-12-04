@@ -28,12 +28,11 @@ function init_gear_sets()
 	sets.weapons.Greatsword = {main="Montante +1",sub="Utu Grip"}
 
 
-	sets.precast.JA['Berserk'] = {back="Cichol's Mantle", feet="Agoge Calligae +1"}
+	sets.precast.JA['Berserk'] = {back="Cichol's Mantle", feet="Agoge Calligae +3"}
 	sets.precast.JA['Warcry'] = {head="Agoge Mask +3"}
 	sets.precast.JA['Aggressor'] = {head="Pummeler's Mask +1"}
 	sets.precast.JA['Mighty Strikes'] = {}
-	sets.precast.JA["Warrior's Charge"] = {}
-	sets.precast.JA['Tomahawk'] = {ammo="Thr. Tomahawk", feet="Agoge Calligae +1"}
+	sets.precast.JA['Tomahawk'] = {ammo="Thr. Tomahawk", feet="Agoge Calligae +3"}
 	sets.precast.JA['Blood Rage'] = {body="Boii Lorica +2"}
 	sets.precast.JA['Provoke'] = set_combine(sets.Enmity,{})
                    
@@ -172,6 +171,7 @@ function init_gear_sets()
 	}
 
 	sets.precast.WS["Seraph Blade"] = sets.precast.WS["Red Lotus Blade"]
+
 	sets.precast.WS["Sanguine Blade"] = set_combine(sets.precast.WS["Red Lotus Blade"],{
 		head="Pixie Hairpin +1",
 		left_ring="Archon Ring"
@@ -228,7 +228,7 @@ function init_gear_sets()
 		 head="Sakpata's Helm",
 		 body="Boii Lorica +2",
 		 hands="Sakpata's Gauntlets",
-		 legs="Pumm. Cuisses +2",
+		 legs="Pumm. Cuisses +3",
 		 feet="Pumm. Calligae +3",
 		 neck={ name="War. Beads +2", augments={'Path: A',}},
 		 waist="Sailfi Belt +1",
@@ -281,12 +281,7 @@ if spell.type == 'WeaponSkill' then
 			windower.chat.input:schedule(1.1,'/ws "'..spell.english..'" '..spell.target.raw..'')
 			add_tick_delay(1.1)
 			return
-				elseif not buffactive['Blood Rage'] and not buffactive['Warcry'] and abil_recasts[2] > latency and abil_recasts[11] < latency then
-					eventArgs.cancel = true
-					windower.chat.input('/ja "Blood Rage" <me>')
-					windower.chat.input:schedule(1.1,'/ws "'..spell.english..'" '..spell.target.raw..'')
-					tickdelay = os.clock() + 1.1
-					return true
+
 			elseif state.Buff['SJ Restriction'] then
 				return
 				elseif player.sub_job == 'SAM' and player.tp > 1850 and abil_recasts[140] < latency then
@@ -320,9 +315,16 @@ if spell.type == 'WeaponSkill' then
 				cancel_spell()
 				eventArgs.cancel = true
 				end
+				elseif available_ws:contains(32) then
+					if spell.english == "Upheaval" then
+						windower.chat.input('/ws "Savage Blade" '..spell.target.raw)
+						cancel_spell()
+						eventArgs.cancel = true
 				end
 				end
 				end
+				end
+
 
 
 
